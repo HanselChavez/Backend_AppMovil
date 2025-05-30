@@ -4,6 +4,8 @@ import cors from "cors";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import rolRoutes from "./routes/rolRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import doctorRoutes from "./routes/doctorRoutes.js";
+import especialidadRoutes from "./routes/especialidadRoutes.js";    
 
 
 const app = express();
@@ -15,6 +17,9 @@ dotenv.config();
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/roles", rolRoutes);
 app.use("/api/auth", authRoutes);
+
+app.use("/api/doctores", doctorRoutes);
+app.use("/api/especialidades", especialidadRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
