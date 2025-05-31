@@ -44,7 +44,7 @@ export default class Doctor {
         SELECT 
             u.id AS usuario_id,
             u.correo,
-            u.contraseña,
+            u.clave,
             u.rol_id,
             d.id AS doctor_id,
             d.especialidad_id,

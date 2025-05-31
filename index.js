@@ -5,8 +5,7 @@ import usuarioRoutes from "./routes/usuarioRoutes.js";
 import rolRoutes from "./routes/rolRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
-import especialidadRoutes from "./routes/especialidadRoutes.js";    
-
+import especialidadRoutes from "./routes/especialidadRoutes.js";
 
 const app = express();
 app.use(cors());

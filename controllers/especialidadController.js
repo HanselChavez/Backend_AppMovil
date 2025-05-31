@@ -5,7 +5,6 @@ export const obtenerEspecialidades = async (req, res) => {
         const especialidades = await Especialidad.getAllEspecialidades();
         res.json(especialidades);
     } catch (err) {
-        console.log(err);
         res.status(500).json({ mensaje: "Error al obtener especialidades" });
     }
 }

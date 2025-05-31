@@ -1,9 +1,11 @@
 import jwt from "jsonwebtoken";
 import Usuario from "../models/usuarioModel.js";
 import Rol from "../models/rolModel.js";
+import { supabase } from "../config/supabaseClient.js";
+import fs from "fs";
 export const login = async (req, res) => {
-    const { correo, contrasena } = req.body;
-    if (!correo || !contrasena) {
+    const { correo, clave } = req.body;
+    if (!correo || !clave) {
         return res
             .status(400)
             .json({ error: "Correo y contraseña son requeridos" });
@@ -17,10 +19,7 @@ export const login = async (req, res) => {
                 .json({ error: "Correo o contraseña incorrectos" });
         }
 
-        const isMatch = await Usuario.comparePassword(
-            contrasena,
-            user.contraseña
-        );
+        const isMatch = await Usuario.comparePassword(clave, user.clave);
         if (!isMatch) {
             return res
                 .status(401)
@@ -42,14 +41,23 @@ export const login = async (req, res) => {
     }
 };
 export const register = async (req, res) => {
-    const { nombre, apellido, correo, contrasena } = req.body;
-    console.log(req.body);
-    if (!correo || !contrasena) {
+    const {
+        dni,
+        nombres,
+        apellidos,
+        correo,
+        clave,
+        telefono,
+        direccion,
+        fechaNacimiento,
+        sexo,
+    } = req.body;
+    const file = req.file;
+    if (!correo || !clave) {
         return res
             .status(400)
             .json({ error: "Correo y contraseña son requeridos" });
     }
-
     try {
         const user = await Usuario.findUserByEmail(correo);
         if (user) {
@@ -57,13 +65,38 @@ export const register = async (req, res) => {
                 .status(401)
                 .json({ error: "Este correo ya esta en uso." });
         }
+        let imagenUrl = null;
+        if (file) {
+            const fileBuffer = fs.readFileSync(file.path);
+
+            const { data, error } = await supabase.storage
+                .from("avatars")
+                .upload(`usuarios/${apellidos.trim() + dni}`, fileBuffer, {
+                    contentType: file.mimetype,
+                    upsert: true,
+                });
+            fs.unlinkSync(file.path);
+
+            if (error) return res.status(500).json({ error: error.message });
+
+            const { data: urlData } = supabase.storage
+                .from("avatars")
+                .getPublicUrl(`usuarios/${apellidos.trim() + dni}`);
+
+            imagenUrl = urlData.publicUrl;
+        }
+
         const userNuevo = await Usuario.createUsuario({
-            nombre,
-            apellido,
+            dni,
+            nombres,
+            apellidos,
             correo,
-            contrasena,
-            telefono: null,
-            foto_perfil: null,
+            clave,
+            telefono,
+            direccion,
+            fechaNacimiento,
+            sexo,
+            foto_perfil: imagenUrl,
             rol_id: 3,
         });
         res.json(userNuevo);

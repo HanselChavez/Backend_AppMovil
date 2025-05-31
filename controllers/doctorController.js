@@ -6,7 +6,6 @@ export const obtenerDoctores = async (req, res) => {
         res.json(doctores);
     } catch (err) {
 
-        console.log(err);
 
         res.status(500).json({ mensaje: "Error al obtener doctores" });
     }

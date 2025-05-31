@@ -7,25 +7,33 @@ export default class Usuario {
         return result.rows;
     };
     static createUsuario = async ({
-        nombre,
-        apellido,
+        dni,
+        nombres,
+        apellidos,
         correo,
-        contrasena,
+        clave,
         telefono,
+        direccion,
+        fechaNacimiento,
         foto_perfil,
+        sexo,
         rol_id,
     }) => {
         const saltRounds = 10;
-        console.log("CONTRASEÑA:", contrasena, saltRounds);
-        const hashedPassword = await bcrypt.hash(contrasena, saltRounds);
+        const hashedPassword = await bcrypt.hash(clave, saltRounds);
         const result = await pool.query(
-            "INSERT INTO Usuarios (nombre, apellido, correo, contraseña,telefono,foto_perfil,rol_id) VALUES ($1, $2, $3, $4,$5,$6,$7) RETURNING *",
+            "INSERT INTO Usuarios ( dni, nombres, apellidos, correo, clave, telefono, direccion, fechanacimiento, sexo, foto_perfil, rol_id) " +
+                "VALUES ($1, $2, $3, $4,$5,$6,$7,$8,$9,$10,$11) RETURNING *",
             [
-                nombre,
-                apellido,
+                dni,
+                nombres,
+                apellidos,
                 correo,
                 hashedPassword,
                 telefono,
+                direccion,
+                fechaNacimiento,
+                sexo,
                 foto_perfil,
                 rol_id,
             ]
@@ -41,11 +49,11 @@ export default class Usuario {
     };
     static updateUsuario = async (
         id,
-        { nombre, apellido, correo, contraseña, telefono, foto_perfil, rol_id }
+        { nombres, apellidos, correo, clave, telefono, foto_perfil, rol_id }
     ) => {
         const result = await pool.query(
-            "UPDATE Usuarios SET nombre = $1, apellido = $2 WHERE id = $3 RETURNING *",
-            [nombre, apellido, id]
+            "UPDATE Usuarios SET nombres = $1, apellidos = $2 WHERE id = $3 RETURNING *",
+            [nombres, apellidos, id]
         );
         return result.rows[0];
     };
@@ -54,7 +62,7 @@ export default class Usuario {
     };
     static findUserByEmail = async (correo) => {
         const query =
-            "SELECT id, correo, contraseña, rol_id FROM Usuarios WHERE correo = $1";
+            "SELECT id, correo, clave, rol_id FROM Usuarios WHERE correo = $1";
         const { rows } = await pool.query(query, [correo]);
         return rows[0] || null;
     };
