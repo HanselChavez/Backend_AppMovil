@@ -95,7 +95,7 @@ export const register = async (req, res) => {
             clave,
             telefono,
             direccion,
-            fechaNacimiento: formatearFecha(formatearFecha),
+            fechaNacimiento: formatearFecha(fechaNacimiento),
             sexo,
             foto_perfil: imagenUrl,
             rol_id: 3,
