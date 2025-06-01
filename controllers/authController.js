@@ -3,6 +3,7 @@ import Usuario from "../models/usuarioModel.js";
 import Rol from "../models/rolModel.js";
 import { supabase } from "../config/supabaseClient.js";
 import fs from "fs";
+import { formatearFecha } from "../config/formatDate.js";
 export const login = async (req, res) => {
     const { correo, clave } = req.body;
     if (!correo || !clave) {
@@ -94,7 +95,7 @@ export const register = async (req, res) => {
             clave,
             telefono,
             direccion,
-            fechaNacimiento,
+            fechaNacimiento: formatearFecha(formatearFecha),
             sexo,
             foto_perfil: imagenUrl,
             rol_id: 3,
