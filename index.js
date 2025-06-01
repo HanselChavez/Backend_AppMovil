@@ -6,11 +6,13 @@ import rolRoutes from "./routes/rolRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
 import especialidadRoutes from "./routes/especialidadRoutes.js";
+import morgan from "morgan";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 dotenv.config();
 
 //app.use('/api/auth',authRoutes);
