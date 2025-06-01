@@ -8,14 +8,14 @@ const swaggerDefinition = {
     },
     servers: [
         {
-            url: "http://localhost:3000", // cambia si tu API está en otro puerto o dominio
+            url: process.env.SERVER, 
         },
     ],
 };
 
 const options = {
     swaggerDefinition,
-    apis: ["./routes/*.js"], // aquí deben estar tus rutas documentadas
+    apis: ["./routes/*.js"],
 };
 
 export const swaggerSpec = swaggerJSDoc(options);
