@@ -22,7 +22,7 @@ export default class Doctor {
             [id]
         );
         return result.rows[0];
-};
+    };
     static updateDoctor = async (
         id,
         { usuario_id, especialidad_id, descripcion }
@@ -38,6 +38,24 @@ export default class Doctor {
         await pool.query("DELETE FROM Doctores WHERE id = $1", [id]);
     };
 
+    static getDoctoresPorEspecialidad = async (id) => {
+        try {
+            const query = `
+        SELECT 
+            d.id AS doctor_id,u.nombres,u.apellidos,u.correo,d.descripcion,
+            d.reputacion,e.nombre AS especialidad
+        FROM Doctores d
+        INNER JOIN Usuarios u ON d.usuario_id = u.id
+        INNER JOIN Especialidades e ON d.especialidad_id = e.id
+        WHERE d.especialidad_id = $1;
+      `;
+            const result = await pool.query(query, [id]);
+            return result.rows;
+        } catch (error) {
+            console.error("Error al obtener doctores por especialidad:", error);
+            throw error;
+        }
+    };
     /* QUIZA SIRVA PARA AUTENTICACION DE DOCTORES
     static findDoctorByEmail = async (correo) => {
     const query = `

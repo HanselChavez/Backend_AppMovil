@@ -6,6 +6,7 @@ import rolRoutes from "./routes/rolRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import doctorRoutes from "./routes/doctorRoutes.js";
 import especialidadRoutes from "./routes/especialidadRoutes.js";
+import citaRoutes from './routes/citaRoutes.js'
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
@@ -25,6 +26,7 @@ app.use("/api/roles", rolRoutes);
 app.use("/api/auth", authRoutes);
 
 app.use("/api/doctores", doctorRoutes);
+app.use("/api/citas", citaRoutes);
 app.use("/api/especialidades", especialidadRoutes);
 
 const PORT = process.env.PORT || 3000;

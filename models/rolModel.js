@@ -19,12 +19,12 @@ export default class Rol {
         return result.rows[0];
     };
     static updateRol = async (id, { nombre }) => {
-        const result = await pool.query(
-            "UPDATE Roles SET nombre = $1 WHERE id = $3 RETURNING *",
-            [nombre, id]
-        );
-        return result.rows[0];
-    };
+    const result = await pool.query(
+        "UPDATE Roles SET nombre = $1 WHERE id = $2 RETURNING *",
+        [nombre, id]
+    );
+    return result.rows[0];
+};
     static deleteRol = async (id) => {
         await pool.query("DELETE FROM Roles WHERE id = $1", [id]);
     };

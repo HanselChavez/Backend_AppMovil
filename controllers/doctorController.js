@@ -46,14 +46,13 @@ export const eliminarDoctor = async (req, res) => {
         res.status(500).json({ mensaje: "Error al eliminar doctor" });
     }
 };
-/*
 export const obtenerDoctoresPorEspecialidad = async (req, res) => {
     try {
-        const { especialidad_id } = req.params;
-        const doctores = await Doctor.getDoctoresPorEspecialidad(especialidad_id);
+        const { id } = req.params;
+        const doctores = await Doctor.getDoctoresPorEspecialidad(id);
         res.json(doctores);
     } catch (err) {
         res.status(500).json({ mensaje: "Error al obtener doctores por especialidad" });
     }
-}; */
+}; 
 
