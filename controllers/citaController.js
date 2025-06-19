@@ -11,11 +11,19 @@ export const getCitasPorDoctor = async (req, res) => {
 };
 
 export const getCitasPorPaciente = async (req, res) => {
-     try {
-      const { id } = req.params;
-      const citas = await Cita.getCitasPorPaciente(id);
-      res.json(citas);
+    try {
+        const { id } = req.params;
+        const citas = await Cita.getCitasPorPaciente(id);
+        res.json(citas);
     } catch (error) {
-      res.status(500).json({ error: 'Error al obtener citas del paciente' });
+        res.status(500).json({ error: "Error al obtener citas del paciente" });
+    }
+};
+export const getCitas = async (req, res) => {
+    try {
+        const citas = await Cita.getCitas();
+        res.json(citas);
+    } catch (error) {
+        res.status(500).json({ error: "Error al obtener todas las citas" });
     }
 };

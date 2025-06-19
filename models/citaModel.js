@@ -32,4 +32,12 @@ export default class Cita {
         const { rows } = await pool.query(query, [pacienteId]);
         return rows;
     }
+    static async getCitas() {
+        const query = `
+        SELECT *
+        FROM Citas ;
+    `;
+        const { rows } = await pool.query(query);
+        return rows;
+    }
 }
