@@ -62,7 +62,7 @@ export default class Usuario {
     };
     static findUserByEmail = async (correo) => {
         const query =
-            "SELECT id, correo, clave, rol_id FROM Usuarios WHERE correo = $1";
+            "SELECT * FROM Usuarios WHERE correo = $1";
         const { rows } = await pool.query(query, [correo]);
         return rows[0] || null;
     };
