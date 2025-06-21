@@ -9,6 +9,7 @@ import servicioRoutes from "./routes/servicioRoutes.js";
 import resenaRoutes from './routes/resenaRoutes.js'
 import especialidadRoutes from "./routes/especialidadRoutes.js";
 import citaRoutes from './routes/citaRoutes.js'
+import historialRoutes from './routes/historialRoutes.js'
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
@@ -32,6 +33,7 @@ app.use("/api/citas", citaRoutes);
 app.use("/api/servicios", servicioRoutes);
 app.use("/api/especialidades", especialidadRoutes);
 app.use("/api/resenas", resenaRoutes);
+app.use("/api/historial", historialRoutes);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
