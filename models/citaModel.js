@@ -6,15 +6,16 @@ export default class Cita {
         doctor_id,
         servicio_id,
         fecha,
+        sede_id,
         hora,
         nota,
     }) {
         const query = `
-            INSERT INTO Citas (usuario_id, doctor_id, servicio_id, fecha, hora, nota)
+            INSERT INTO Citas (usuario_id, doctor_id,sede_id, servicio_id, fecha, hora, nota)
             VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING id
         `;
-        const values = [usuario_id, doctor_id, servicio_id, fecha, hora, nota];
+        const values = [usuario_id, doctor_id,sede_id, servicio_id, fecha, hora, nota];
         const result = await pool.query(query, values);
         return result.rows[0];
     }

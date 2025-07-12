@@ -1,9 +1,9 @@
 import Cita from "../models/citaModel.js";
 
 export const addCita = async (req, res) => {
-    const { usuario_id, doctor_id, servicio_id, fecha, hora, nota } = req.body;
+    const { usuario_id, doctor_id, servicio_id, fecha, hora, nota,sede_id } = req.body;
 
-    if (!usuario_id || !doctor_id || !fecha || !hora) {
+    if (!usuario_id || !doctor_id || !fecha || !hora||!sede_id) {
         return res
             .status(400)
             .json({
@@ -15,6 +15,7 @@ export const addCita = async (req, res) => {
         const nuevaCita = await Cita.addCita({
             usuario_id,
             doctor_id,
+            sede_id,
             servicio_id: servicio_id || null,
             fecha,
             hora,

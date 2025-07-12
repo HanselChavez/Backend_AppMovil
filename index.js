@@ -10,6 +10,7 @@ import resenaRoutes from './routes/resenaRoutes.js'
 import especialidadRoutes from "./routes/especialidadRoutes.js";
 import citaRoutes from './routes/citaRoutes.js'
 import historialRoutes from './routes/historialRoutes.js'
+import sedeRoutes from './routes/sedeRoutes.js'
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.js";
@@ -30,6 +31,7 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/doctores", doctorRoutes);
 app.use("/api/citas", citaRoutes);
+app.use("/api/sedes", sedeRoutes);
 app.use("/api/servicios", servicioRoutes);
 app.use("/api/especialidades", especialidadRoutes);
 app.use("/api/resenas", resenaRoutes);
