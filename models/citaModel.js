@@ -1,6 +1,23 @@
 import { pool } from "../db/db.js";
 
 export default class Cita {
+    static async addCita({
+        usuario_id,
+        doctor_id,
+        servicio_id,
+        fecha,
+        hora,
+        nota,
+    }) {
+        const query = `
+            INSERT INTO Citas (usuario_id, doctor_id, servicio_id, fecha, hora, nota)
+            VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING id
+        `;
+        const values = [usuario_id, doctor_id, servicio_id, fecha, hora, nota];
+        const result = await pool.query(query, values);
+        return result.rows[0];
+    }
     static async getCitasPorDoctor(doctorId, fechaInicio, fechaFin) {
         let query = `
             SELECT c.*, u.nombres AS paciente_nombre, u.apellidos AS paciente_apellidos

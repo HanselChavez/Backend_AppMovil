@@ -1,4 +1,36 @@
 import Cita from "../models/citaModel.js";
+
+export const addCita = async (req, res) => {
+    const { usuario_id, doctor_id, servicio_id, fecha, hora, nota } = req.body;
+
+    if (!usuario_id || !doctor_id || !fecha || !hora) {
+        return res
+            .status(400)
+            .json({
+                error: "usuario_id, doctor_id, fecha y hora son requeridos",
+            });
+    }
+
+    try {
+        const nuevaCita = await Cita.addCita({
+            usuario_id,
+            doctor_id,
+            servicio_id: servicio_id || null,
+            fecha,
+            hora,
+            nota: nota || null,
+        });
+
+        res.status(200).json({
+            cita_id: nuevaCita.id,
+            mensaje: "Cita creada exitosamente",
+        });
+    } catch (error) {
+        console.error("Error al crear cita:", error);
+        res.status(500).json({ error: "Error al crear cita" });
+    }
+};
+
 export const getCitasPorDoctor = async (req, res) => {
     try {
         const { id } = req.params;
