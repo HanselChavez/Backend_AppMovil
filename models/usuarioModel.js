@@ -73,13 +73,11 @@ export default class Usuario {
             [
                 nombres,
                 apellidos,
-                correo,
                 telefono,
                 direccion,
                 fechaNacimiento,
                 sexo,
                 foto_perfil,
-                rol_id,
                 id,
             ]
         );
