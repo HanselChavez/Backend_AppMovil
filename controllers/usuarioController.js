@@ -1,5 +1,6 @@
 import Usuario from "../models/usuarioModel.js";
-
+import { supabase } from "../config/supabaseClient.js";
+import fs from "fs";
 const formatearFechaIso = (fechaIso) => {
     const fecha = new Date(fechaIso);
     const yyyy = fecha.getFullYear();
@@ -61,8 +62,10 @@ export const actualizarUsuario = async (req, res) => {
     try {
         console.log("DATOS RECIBIDOS:", req.body);
 
+        const file = req.file;
         const { clave, ...userDataSinClave } = req.body;
 
+        // Validar y normalizar sexo
         if (userDataSinClave.sexo) {
             const sexo = userDataSinClave.sexo.toLowerCase();
             if (sexo === "masculino") {
@@ -75,6 +78,36 @@ export const actualizarUsuario = async (req, res) => {
                 });
             }
         }
+
+        if (file) {
+            const fileBuffer = fs.readFileSync(file.path);
+            const nombreArchivo = `usuarios/${
+                userDataSinClave.apellidos.trim() + userDataSinClave.dni
+            }`;
+            console.log(nombreArchivo)
+            console.log("RES",await supabase.storage.from("avatars").remove([nombreArchivo]));
+
+            const { data, error } = await supabase.storage
+                .from("avatars")
+                .upload(nombreArchivo, fileBuffer, {
+                    contentType: file.mimetype,
+                    upsert: true, 
+                });
+
+            fs.unlinkSync(file.path); 
+
+            if (error) {
+                console.error("Error al subir imagen:", error.message);
+                return res.status(500).json({ error: error.message });
+            }
+
+            const { data: urlData } = supabase.storage
+                .from("avatars")
+                .getPublicUrl(nombreArchivo);
+
+            userDataSinClave.foto_perfil = urlData.publicUrl;
+        }
+
         const usuario = await Usuario.updateUsuario(
             req.params.id,
             userDataSinClave

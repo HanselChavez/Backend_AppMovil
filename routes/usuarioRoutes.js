@@ -1,5 +1,6 @@
 import express from "express";
 const router = express.Router();
+import { upload } from "../config/multerConfig.js";
 import {
     obtenerUsuarios,
     crearUsuario,
@@ -64,7 +65,8 @@ import {
 router.get("/", obtenerUsuarios);
 router.post("/", crearUsuario);
 router.get("/:id", obtenerUsuario);
-router.put("/:id", actualizarUsuario);
+router.put("/:id", upload.single("foto"),  actualizarUsuario);
+
 router.delete("/:id", eliminarUsuario);
 
 export default router;
