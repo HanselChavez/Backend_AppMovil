@@ -54,7 +54,7 @@ export default class Usuario {
             apellidos,
             telefono,
             direccion,
-            fechaNacimiento,
+            fechanacimiento,
             sexo,
             foto_perfil,
         }
@@ -75,7 +75,7 @@ export default class Usuario {
                 apellidos,
                 telefono,
                 direccion,
-                fechaNacimiento,
+                fechanacimiento,
                 sexo,
                 foto_perfil,
                 id,
