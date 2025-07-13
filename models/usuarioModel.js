@@ -54,7 +54,6 @@ export default class Usuario {
             apellidos,
             telefono,
             direccion,
-            fechanacimiento,
             sexo,
             foto_perfil,
         }
@@ -65,17 +64,15 @@ export default class Usuario {
             apellidos = $2,
             telefono = $3,
             direccion = $4,
-            fechaNacimiento = $5,
-            sexo = $6,
-            foto_perfil = $7
-         WHERE id = $8
+            sexo = $5,
+            foto_perfil = $6
+         WHERE id = $7
          RETURNING *`,
             [
                 nombres,
                 apellidos,
                 telefono,
                 direccion,
-                fechanacimiento,
                 sexo,
                 foto_perfil,
                 id,
