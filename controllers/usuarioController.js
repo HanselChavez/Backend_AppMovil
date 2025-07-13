@@ -25,7 +25,7 @@ export const obtenerUsuario = async (req, res) => {
         if (!usuario)
             return res.status(404).json({ mensaje: "Usuario no encontrado" });
 
-        if (!usuario.foto_perfil || usuario.foto_perfil.trim() === "") {
+        if (!usuario.foto_perfil || usuario.foto_perfil.trim() === "Sin imagen") {
             const randomNum = Math.floor(Math.random() * 9); 
             usuario.foto_perfil = `https://randomuser.me/api/portraits/lego/${randomNum}.jpg`;
         }
