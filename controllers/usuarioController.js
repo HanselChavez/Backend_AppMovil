@@ -63,19 +63,6 @@ export const actualizarUsuario = async (req, res) => {
 
         const { clave, ...userDataSinClave } = req.body;
 
-        if (userDataSinClave.fechanacimiento) {
-            const fecha = new Date(userDataSinClave.fechanacimiento);
-            if (!isNaN(fecha)) {
-                const yyyy = fecha.getFullYear();
-                const mm = String(fecha.getMonth() + 1).padStart(2, "0");
-                const dd = String(fecha.getDate()).padStart(2, "0");
-                userDataSinClave.fechanacimiento = `${yyyy}-${mm}-${dd}`;
-            } else {
-                return res
-                    .status(400)
-                    .json({ mensaje: "Fecha de nacimiento inválida" });
-            }
-        }
         if (userDataSinClave.sexo) {
             const sexo = userDataSinClave.sexo.toLowerCase();
             if (sexo === "masculino") {

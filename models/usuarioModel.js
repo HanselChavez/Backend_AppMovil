@@ -50,6 +50,7 @@ export default class Usuario {
     static updateUsuario = async (
         id,
         {
+            dni,
             nombres,
             apellidos,
             telefono,
@@ -66,7 +67,8 @@ export default class Usuario {
             direccion = $4,
             sexo = $5,
             foto_perfil = $6
-         WHERE id = $7
+            dni=$7
+         WHERE id = $8
          RETURNING *`,
             [
                 nombres,
@@ -75,6 +77,7 @@ export default class Usuario {
                 direccion,
                 sexo,
                 foto_perfil,
+                dni,
                 id,
             ]
         );
