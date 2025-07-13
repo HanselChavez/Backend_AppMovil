@@ -41,12 +41,14 @@ export const obtenerUsuario = async (req, res) => {
 
 export const actualizarUsuario = async (req, res) => {
     try {
+           console.log("DATOS", req.body);
         const { clave, ...userDataSinClave } = req.body;
-        console.log("DATOS", usuario);
         const usuario = await Usuario.updateUsuario(
             req.params.id,
             userDataSinClave
         );
+     
+
         res.json(usuario);
     } catch (err) {
         res.status(500).json({ mensaje: "Error al actualizar usuario" });
