@@ -1,3 +1,4 @@
+import { use } from "react";
 import Usuario from "../models/usuarioModel.js";
 
 export const obtenerUsuarios = async (req, res) => {
@@ -41,16 +42,26 @@ export const obtenerUsuario = async (req, res) => {
 
 export const actualizarUsuario = async (req, res) => {
     try {
-           console.log("DATOS", req.body);
+        console.log("DATOS", req.body);
+
         const { clave, ...userDataSinClave } = req.body;
+
+        if (userDataSinClave.fechanacimiento) {
+            const fecha = new Date(userDataSinClave.fechanacimiento);
+            const yyyy = fecha.getFullYear();
+            const mm = String(fecha.getMonth() + 1).padStart(2, "0");
+            const dd = String(fecha.getDate()).padStart(2, "0");
+            userDataSinClave.fechanacimiento = `${yyyy}-${mm}-${dd}`;
+        }
+
         const usuario = await Usuario.updateUsuario(
             req.params.id,
             userDataSinClave
         );
-     
-
+        console.log("DATOS FORMATEADOS", usuario);
         res.json(usuario);
     } catch (err) {
+        console.error("Error al actualizar usuario:", err);
         res.status(500).json({ mensaje: "Error al actualizar usuario" });
     }
 };

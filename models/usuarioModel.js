@@ -52,26 +52,22 @@ export default class Usuario {
         {
             nombres,
             apellidos,
-            correo,
             telefono,
             direccion,
             fechaNacimiento,
             sexo,
             foto_perfil,
-            rol_id,
         }
     ) => {
         const result = await pool.query(
             `UPDATE Usuarios SET 
             nombres = $1,
             apellidos = $2,
-            correo = $3,
             telefono = $4,
             direccion = $5,
             fechaNacimiento = $6,
             sexo = $7,
-            foto_perfil = $8,
-            rol_id = $9
+            foto_perfil = $8
          WHERE id = $10
          RETURNING *`,
             [
