@@ -59,7 +59,6 @@ export default class Usuario {
             sexo,
             foto_perfil,
             rol_id,
-            // clave se ignora completamente
         }
     ) => {
         const result = await pool.query(

@@ -42,6 +42,7 @@ export const obtenerUsuario = async (req, res) => {
 export const actualizarUsuario = async (req, res) => {
     try {
         const { clave, ...userDataSinClave } = req.body;
+        console.log("DATOS", usuario);
         const usuario = await Usuario.updateUsuario(
             req.params.id,
             userDataSinClave
