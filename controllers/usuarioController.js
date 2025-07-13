@@ -37,7 +37,9 @@ export const obtenerUsuario = async (req, res) => {
         }
 
         if (usuario.fechanacimiento) {
-            usuario.fechanacimiento = formatearFechaIso(usuario.fechanacimiento);
+            usuario.fechanacimiento = formatearFechaIso(
+                usuario.fechanacimiento
+            );
         }
 
         if (
@@ -66,7 +68,21 @@ export const actualizarUsuario = async (req, res) => {
                 userDataSinClave.fechanacimiento
             );
         }
-
+        if (userDataSinClave.sexo) {
+            const sexo = userDataSinClave.sexo.toLowerCase();
+            if (sexo === "masculino") {
+                userDataSinClave.sexo = "M";
+            } else if (sexo === "femenino") {
+                userDataSinClave.sexo = "F";
+            } else {
+                return res
+                    .status(400)
+                    .json({
+                        mensaje:
+                            "Sexo inválido, debe ser 'Masculino' o 'Femenino'",
+                    });
+            }
+        }
         const usuario = await Usuario.updateUsuario(
             req.params.id,
             userDataSinClave
