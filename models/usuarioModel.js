@@ -66,7 +66,7 @@ export default class Usuario {
             telefono = $3,
             direccion = $4,
             sexo = $5,
-            foto_perfil = $6
+            foto_perfil = $6,
             dni=$7
          WHERE id = $8
          RETURNING *`,
