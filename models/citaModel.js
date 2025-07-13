@@ -12,7 +12,7 @@ export default class Cita {
     }) {
         const query = `
             INSERT INTO Citas (usuario_id, doctor_id,sede_id, servicio_id, fecha, hora, nota)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            VALUES ($1, $2, $3, $4, $5, $6,$7)
             RETURNING id
         `;
         const values = [usuario_id, doctor_id,sede_id, servicio_id, fecha, hora, nota];
