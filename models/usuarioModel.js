@@ -49,11 +49,44 @@ export default class Usuario {
     };
     static updateUsuario = async (
         id,
-        { nombres, apellidos, correo, clave, telefono, foto_perfil, rol_id }
+        {
+            nombres,
+            apellidos,
+            correo,
+            telefono,
+            direccion,
+            fechaNacimiento,
+            sexo,
+            foto_perfil,
+            rol_id,
+            // clave se ignora completamente
+        }
     ) => {
         const result = await pool.query(
-            "UPDATE Usuarios SET nombres = $1, apellidos = $2 WHERE id = $3 RETURNING *",
-            [nombres, apellidos, id]
+            `UPDATE Usuarios SET 
+            nombres = $1,
+            apellidos = $2,
+            correo = $3,
+            telefono = $4,
+            direccion = $5,
+            fechaNacimiento = $6,
+            sexo = $7,
+            foto_perfil = $8,
+            rol_id = $9
+         WHERE id = $10
+         RETURNING *`,
+            [
+                nombres,
+                apellidos,
+                correo,
+                telefono,
+                direccion,
+                fechaNacimiento,
+                sexo,
+                foto_perfil,
+                rol_id,
+                id,
+            ]
         );
         return result.rows[0];
     };
@@ -61,8 +94,7 @@ export default class Usuario {
         await pool.query("DELETE FROM Usuarios WHERE id = $1", [id]);
     };
     static findUserByEmail = async (correo) => {
-        const query =
-            "SELECT * FROM Usuarios WHERE correo = $1";
+        const query = "SELECT * FROM Usuarios WHERE correo = $1";
         const { rows } = await pool.query(query, [correo]);
         return rows[0] || null;
     };

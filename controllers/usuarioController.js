@@ -25,8 +25,11 @@ export const obtenerUsuario = async (req, res) => {
         if (!usuario)
             return res.status(404).json({ mensaje: "Usuario no encontrado" });
 
-        if (!usuario.foto_perfil || usuario.foto_perfil.trim() === "Sin imagen") {
-            const randomNum = Math.floor(Math.random() * 9); 
+        if (
+            !usuario.foto_perfil ||
+            usuario.foto_perfil.trim() === "Sin imagen"
+        ) {
+            const randomNum = Math.floor(Math.random() * 9);
             usuario.foto_perfil = `https://randomuser.me/api/portraits/lego/${randomNum}.jpg`;
         }
 
@@ -38,7 +41,11 @@ export const obtenerUsuario = async (req, res) => {
 
 export const actualizarUsuario = async (req, res) => {
     try {
-        const usuario = await Usuario.updateUsuario(req.params.id, req.body);
+        const { clave, ...userDataSinClave } = req.body;
+        const usuario = await Usuario.updateUsuario(
+            req.params.id,
+            userDataSinClave
+        );
         res.json(usuario);
     } catch (err) {
         res.status(500).json({ mensaje: "Error al actualizar usuario" });
