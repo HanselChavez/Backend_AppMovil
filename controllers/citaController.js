@@ -1,14 +1,35 @@
 import Cita from "../models/citaModel.js";
 
-export const addCita = async (req, res) => {
-    const { usuario_id, doctor_id, servicio_id, fecha, hora, nota,sede_id } = req.body;
+export const updateCita = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { estado } = req.body;
 
-    if (!usuario_id || !doctor_id || !fecha || !hora||!sede_id) {
-        return res
-            .status(400)
-            .json({
-                error: "usuario_id, doctor_id, fecha y hora son requeridos",
-            });
+        const estadosValidos = ['Pendiente', 'Confirmada', 'Cancelada', 'Completada'];
+        if (!estadosValidos.includes(estado)) {
+            return res.status(400).json({ mensaje: 'Estado no válido.' });
+        }
+
+        const citaActualizada = await Cita.updateEstadoCita(id, estado);
+
+        if (!citaActualizada) {
+            return res.status(404).json({ mensaje: 'Cita no encontrada.' });
+        }
+
+        res.json(citaActualizada);
+    } catch (error) {
+        console.error('Error al actualizar cita:', error);
+        res.status(500).json({ mensaje: 'Error del servidor' });
+    }
+};
+export const addCita = async (req, res) => {
+    const { usuario_id, doctor_id, servicio_id, fecha, hora, nota, sede_id } =
+        req.body;
+
+    if (!usuario_id || !doctor_id || !fecha || !hora || !sede_id) {
+        return res.status(400).json({
+            error: "usuario_id, doctor_id, fecha y hora son requeridos",
+        });
     }
 
     try {
