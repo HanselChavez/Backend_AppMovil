@@ -63,12 +63,12 @@ export default class Usuario {
             `UPDATE Usuarios SET 
             nombres = $1,
             apellidos = $2,
-            telefono = $4,
-            direccion = $5,
-            fechaNacimiento = $6,
-            sexo = $7,
-            foto_perfil = $8
-         WHERE id = $10
+            telefono = $3,
+            direccion = $4,
+            fechaNacimiento = $5,
+            sexo = $6,
+            foto_perfil = $7
+         WHERE id = $8
          RETURNING *`,
             [
                 nombres,
